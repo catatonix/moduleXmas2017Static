@@ -146,6 +146,7 @@ customElements.define('fancy-sticker', class extends Polymer.Element {
       }
     }
   }
+  
   // todo look into how this affects image size and can we get our own images to scale and position correctly
   drawIntoContext(ctx) {
     const w = this._scale * this.$.img.width;
