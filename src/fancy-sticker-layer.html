@@ -1,0 +1,133 @@
+<!--
+@license
+Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The compconste set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The compconste set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="fancy-sticker.html">
+
+<dom-module id="fancy-sticker-layer">
+  <template>
+    <style>
+       :host {
+        overflow: hidden;
+      }
+    </style>
+
+    <dom-repeat items="[[stickers]]" as="sticker">
+      <template>
+        <fancy-sticker src="[[sticker.url]]" alt="[[sticker.alt]]" bounds="[[sticker.bounds]]" anchor="[[sticker.bounds.anchorPoint]]"
+          rotation="[[sticker.bounds.rotation]]" show-bounds="[[showBounds]]"></fancy-sticker>
+      </template>
+    </dom-repeat>
+  </template>
+
+  <script>
+    customElements.define('fancy-sticker-layer', class extends Polymer.Element {
+      static get is() {
+        return 'fancy-sticker-layer';
+      }
+
+      static get properties() {
+        return {
+          faces: {
+            type: Array
+          },
+
+          random: {
+            type: Boolean
+          },
+
+          types: {
+            type: Array
+          },
+
+          stickers: {
+            type: Array,
+            readOnly: true
+          },
+
+          showBounds: {
+            type: Boolean
+          }
+        };
+      }
+      static get observers() {
+        return ['_updateStickers(types, random, faces)']
+      }
+
+      drawIntoContext(ctx) {
+        this.shadowRoot.querySelectorAll('fancy-sticker').forEach(s => s.drawIntoContext(ctx));
+      }
+
+      randomize() {
+        if (!this.random) return;
+        this._updateStickers();
+      }
+
+      _updateStickers() {
+        const stickers = this._computeStickers(this.types, this.random, this.faces);
+        this._setStickers(stickers);
+      }
+
+      _computeStickers(types, random, faces) {
+        // No faces or types.
+        if (!faces || !types || !types.length) return null;
+
+        const l = types.length;
+        // Support array of arrays as multiple types.
+        const singleCombo = !Array.isArray(types[0]);
+        return faces.reduce((res, face, i) => {
+          let stickersInfo = types;
+          if (!singleCombo) {
+            if (random && l > 1) {
+              // Randomize combo for each face.
+              i = Math.floor(Math.random() * l);
+              // Don't pick the same index as last time!
+              while (face.__stickerTypes === types && face.__stickerIndex === i) {
+                i = Math.floor(Math.random() * l);
+              }
+              face.__stickerTypes = types;
+              face.__stickerIndex = i;
+            } else {
+              i = i % l;
+            }
+            stickersInfo = types[i];
+          }
+          stickersInfo.forEach(info => {
+            const sticker = this._getSticker(info, face);
+            sticker && res.push(sticker);
+          });
+          return res;
+        }, []);
+      }
+
+      _getSticker(info, face) {
+        const type = info.name;
+        if (type === 'emotion') {
+          const emotion = face.emotions[0];
+          const url = info.urls ? info.urls[emotion] : info.url;
+          return {
+            url: url || `stickers/${emotion}.svg`,
+            alt: info.alt || emotion,
+            bounds: face.bounds.face
+          };
+        }
+        if (face.bounds[type]) {
+          return {
+            url: info.url || `stickers/${type}.svg`,
+            alt: info.alt || type,
+            bounds: face.bounds[type]
+          };
+        }
+      }
+
+    });
+  </script>
+</dom-module>

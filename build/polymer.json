@@ -1,0 +1,42 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src\\cheese-app.html",
+  "fragments": [
+    "src\\lazy-imports.html"
+  ],
+  "sources": [
+    "src\\**\\*",
+    "images\\**\\*",
+    "stickers\\**\\*",
+    "index.html",
+    "index.html",
+    "src\\cheese-app.html",
+    "src\\lazy-imports.html"
+  ],
+  "extraDependencies": [
+    "bower_components\\webcomponentsjs\\*.js",
+    "manifest.json",
+    "bower_components\\webcomponentsjs\\*"
+  ],
+  "builds": [
+    {
+      "name": "bundled",
+      "bundle": true,
+      "html": {
+        "minify": true
+      },
+      "css": {
+        "minify": true
+      },
+      "js": {
+        "minify": true
+      },
+      "addServiceWorker": true
+    }
+  ],
+  "lint": {
+    "rules": [
+      "polymer-2-hybrid"
+    ]
+  }
+}
