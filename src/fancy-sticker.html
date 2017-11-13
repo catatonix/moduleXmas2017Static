@@ -179,12 +179,10 @@ customElements.define('fancy-sticker', class extends Polymer.Element {
     // Compute initial x/y values from bounds and anchor.
     bounds = bounds || {left: 40, top: 40, width: 128, height: 128};
     this._x = bounds.left + (bounds.width - 128) * this._ax;
-    this._y = bounds.top + (bounds.height - 128) * this._ay;
+    this._y = bounds.top + (bounds.height - 118) * this._ay;
     this._scale = bounds.width / 128;
     console.log("> this. _x, _y, _scale...");
-    console.log(this._x);
-    console.log(this._y);
-    console.log(this._scale);
+    console.log(this);
     
     // Compute rotation.
     rotation = rotation || {};
