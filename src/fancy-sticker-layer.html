@@ -114,7 +114,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         const type = info.name;
         if (type === 'emotion') {
           console.log("> _getSticker() called...");
-          console.log(face.emotions);
+          console.log(face.emotions[0]);
           const emotion = face.emotions[0];
           const url = info.urls ? info.urls[emotion] : info.url;
           return {
