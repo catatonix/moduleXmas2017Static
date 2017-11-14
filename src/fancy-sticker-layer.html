@@ -112,6 +112,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /* Method that attempts to resolve emotions and face features from an image  */
       _getSticker(info, face) {
         const type = info.name;
+        console.log(type);
         if (type === 'emotion') {
           console.log("> _getSticker() called...");
           console.log(face.emotions[0]);
