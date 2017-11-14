@@ -17,7 +17,7 @@ var Y = {
 
 function XLSF(oTarget,urlBase) {
   var writeDebug = soundManager._wD;
-  var urlBase = (urlBase?urlBase:'lights/');
+  var urlBase = (urlBase?urlBase:'/js/snowstorm/lights/');
   writeDebug('XLSF()');
   var IS_MOON_COMPUTER = false;
   var isIE = navigator.userAgent.match(/msie/i);
@@ -424,7 +424,13 @@ function XLSF(oTarget,urlBase) {
   var i=0;
   var j=0;
 
-  $('lights').style.display = 'block';
+//  $('lights').style.display = 'block'; // (removed since $("..")... seems to throw an error {jquery doesnt work with polymer?})
+  var lights = document.getElementsByClassName("xlsf-light");
+  console.log(lights);
+  for (var i = 0; i < lights.length; i++){
+    lights[i].style.display = 'block';
+  }
+  //light.style.display = 'block';
 
   // start lights to the right of <h1>
   var offset = 0; // parseInt(document.getElementsByTagName('h1')[0].offsetWidth)+16;
