@@ -182,6 +182,7 @@ customElements.define('fancy-sticker', class extends Polymer.Element {
     this._y = bounds.top + (bounds.height - 118) * this._ay;
     this._scale = bounds.width / 128;
     console.log("> this. _x, _y, _scale...");
+    // todo look into where this is called and where the bounds parameter is passed from
     console.log(this);
     
     // Compute rotation.

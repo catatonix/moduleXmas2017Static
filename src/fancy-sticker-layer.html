@@ -108,7 +108,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }, []);
       }
 
-      // TODO rewrite this function to get custom stickers from our own location
+      // TODO rewrite this function to get custom stickers from our own sources
       /* Method that attempts to resolve emotions and face features from an image  */
       _getSticker(info, face) {
         const type = info.name;
@@ -121,7 +121,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             url: url || `stickers/${emotion}.svg`,
             alt: info.alt || emotion,
             bounds: face.bounds.face
-          };
+          }; // NOTE: the above return statement seems to represent a sticker object {url: ..., alt:...., bounds:....}
         }
         if (face.bounds[type]) {
           return {
