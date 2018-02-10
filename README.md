@@ -1,3 +1,5 @@
+> Modification of the cheese project by the google polymer team to display custom 'snapchat filters'. Christmas theme: National Elf Service
+
 # Cheese
 
 Cheese app is a simple web app that lets you take a selfie and automatically places stickers on the face.
